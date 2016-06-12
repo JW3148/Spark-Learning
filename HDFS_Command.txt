@@ -1,0 +1,11 @@
+All start with [hadoop fs]
+
+-mkdir input
+-rm -r input
+-ls
+-ls /
+-cat /user/training/foo.txt
+-get /user/training/foo.txt   foo.txt
+-put foo.txt  /user/training/foo.txt
+
+* ? No cd or pwd available, need to specify full path when doing operation?
