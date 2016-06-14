@@ -1,0 +1,16 @@
+This is from:
+http://apache-spark-user-list.1001560.n3.nabble.com/Using-pyspark-shell-in-local-n-single-machine-mode-unnecessarily-tries-to-connect-to-HDFS-NameNode-td4090.html
+
+
+A file specified to SparkContext like this '/path/to/some/file':
+
+Will be interpreted as 'hdfs://path/to/some/file', when settings for HDFS are present in '/etc/hadoop/conf/*-site.xml'.
+Will be interpreted as 'file:///path/to/some/file', (i.e. locally) otherwise.
+I confirmed this behavior by temporarily doing this:
+
+user$ sudo mv /etc/hadoop/conf /etc/hadoop/conf_
+after which I re-ran my commands below. This time the SparkContext did, indeed, look for and found, the file locally.
+
+In summary, '/path/to/some/file' is interpreted as an in-HDFS relative path when a HDFS configuration is found; and interpreted as an absolute local UNIX file path when a HDFS configuration is *not* found.
+
+To be on the safe side, it's probably best to qualify local files with 'file:///' when that is what's intended; ahd with 'hdfs://' when HDFS is what's intended.
